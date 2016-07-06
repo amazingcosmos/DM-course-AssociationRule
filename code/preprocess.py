@@ -10,9 +10,9 @@ OUTPUT_FILE = '../data/diagnosis.csv'
 # build up the number presentation of each feature
 HEAD = '1:temp,2:nausea,3:lumbar,4:urine,5:micturition,6:urethra,7:inflammation,8:nephritis\n'
 
-def preprocess(file_path):
-    fp_read = open(file_path, 'r')
-    fp_write = open(OUTPUT_FILE, 'w')
+def preprocess(source_path, target_path):
+    fp_read = open(source_path, 'r')
+    fp_write = open(target_path, 'w')
     fp_write.write(HEAD)
     for line in fp_read:
         content = line.strip().split()
@@ -37,4 +37,4 @@ if __name__ == '__main__':
             file_path = raw_input('File not exist! Please enter the data file path:')
     else:
         file_path = DATA_FILE
-    preprocess(file_path)
+    preprocess(file_path, OUTPUT_FILE)
