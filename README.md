@@ -40,8 +40,8 @@
 
 最终生成规则列表rules，其中每项都是一个字典，包含五项内容。代表一条满足给定置信度0.6的规则及其对应的支持度、置信度、提升度。
 
-| 属性名称 | 类型           | 解释 |
-| ------------- | ------------- | ----- |
+| 属性名称 | 类型 | 解释 |
+| -------- | ---- | ---- |
 | lhs | list | 规则的前件 |
 | rhs | list | 规则的后件 |
 | support | float | 支持度值 |
@@ -67,6 +67,37 @@
 ![图8 散点图](./image/rules_scatter.jpg)
 
 ## 六、结果分析
+
+如果选择支持度大于3作为筛选条件，在去除冗余后的规则中，共有14条规则属于强规则。
+
+- nausea --> temp,lumbar,micturition,nephritis
+
+- temp,nausea,lumbar --> nephritis,micturition
+
+- nephritis,nausea --> temp,lumbar,micturition
+
+- temp,nausea --> nephritis,lumbar,micturition
+
+- temp,micturition --> nephritis,nausea,lumbar
+
+- nephritis,lumbar,micturition --> temp,nausea
+
+- lumbar,micturition --> nephritis,temp,nausea
+
+- nausea,lumbar --> nephritis,temp,micturition
+
+- nephritis,micturition --> temp,nausea,lumbar
+
+- nephritis,temp,nausea --> lumbar,micturition
+
+- nephritis,nausea,lumbar --> temp,micturition
+
+- nephritis,temp,lumbar,micturition --> nausea
+
+- temp,lumbar,micturition --> nephritis,nausea
+
+- nephritis,temp,micturition --> nausea,lumbar
+
 
 
 
