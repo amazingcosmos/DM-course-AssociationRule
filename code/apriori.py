@@ -80,7 +80,7 @@ def create_ck(ffk, k):
     return ck
 
 
-def calc_surpport(ck, data_set, min_support = 0.5):
+def calc_support(ck, data_set, min_support = 0.5):
     """Find frequent set.
 
     Find the frequent k-item set 'fk' from the candidate k-item set 'ck' by calculating support that match min_support.
@@ -132,7 +132,7 @@ def apriori(data_set, min_support):
     # get the candidate set of 1-item
     c1 = create_c1(data_set)
     # get 1-item frequent set and corresponding support value dictionary
-    f1, f_support = calc_surpport(c1, data_set, min_support)
+    f1, f_support = calc_support(c1, data_set, min_support)
     # build a frequent set to store all k-item frequent set
     f = [f1]
     logging.debug('k: 1')
@@ -141,7 +141,7 @@ def apriori(data_set, min_support):
     while(len(f[k-2]) > 0):
         logging.debug('k: %s' % k)
         ck = create_ck(f[k-2], k)
-        fk, fk_support = calc_surpport(ck, data_set, min_support)
+        fk, fk_support = calc_support(ck, data_set, min_support)
         # add new k-item frequent set into 'f'
         f.append(fk)
         # update the dictionay
