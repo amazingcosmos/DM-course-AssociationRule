@@ -54,3 +54,48 @@ plot = df_strong_rules.plot.scatter(x = 'support', y = 'confident', c = 'lift', 
 fig = plot.get_figure()
 fig.savefig('../image/rules_scatter.jpg')
 
+df_strong_rules = df_strong_rules.sort_values(by = 'lift', ascending = False)
+df_strong_rules = df_strong_rules.reset_index(drop = True)
+names = {1:'发烧', 2:'恶心', 3:'腰疼', 4:'连续排尿', 5:'排尿疼痛', 6:'尿道肿胀', 7:'膀胱炎症', 8:'肾炎'}
+
+# filter by lift
+counter = 0
+for i in range(len(df_strong_rules)):
+    rule = df_strong_rules.iloc[i]
+    if rule['lift'] > 2.0:
+        lhs_index = []
+        for item in rule['lhs']:
+            lhs_index.append(names[item])
+        lhs = ', '.join(lhs_index)
+        
+        rhs_index = []
+        for item in rule['rhs']:
+            rhs_index.append(names[item])
+        rhs = ', '.join(rhs_index)
+        lift = round(rule['lift'], 2)
+        support = round(rule['support'], 2)
+        confident = round(rule['confident'], 2)
+        print '%s \t %s \t %s \t %s' % (lhs+' --> '+rhs, lift, support, confident)
+        counter += 1
+print 'num of strong rules: ', counter, '\n\n'
+
+# filted by the same lift value
+counter = 0
+disease = []
+for i in range(len(df_strong_rules)):
+    rule = df_strong_rules.iloc[i]
+    if rule['lift'] > 2.0:
+        lift = round(rule['lift'], 2)
+        support = round(rule['support'], 2)
+        confident = round(rule['confident'], 2)
+        
+        symptom = []
+        for item in (rule['rhs'] | rule['lhs']):
+            symptom.append(names[item])
+        symptom = ', '.join(symptom)
+        if symptom not in disease:
+            disease.append(symptom)
+            print '%s \t %s \t %s \t %s' % (symptom, lift, support, confident)
+            counter += 1
+
+print 'num of rules: ', counter
